@@ -74,7 +74,22 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
           TIME REMAINING
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-4">
+        {/* Progress Bar */}
+        <div className="progress-container h-4 rounded-full bg-opacity-20 bg-neutral-800 overflow-hidden">
+          <div 
+            className="progress-bar h-full rounded-full relative" 
+            style={{
+              background: 'linear-gradient(90deg, var(--neon-green) 0%, var(--electric-blue) 50%, var(--hot-pink) 100%)',
+              width: `${((1 - (timeRemaining.days * 86400 + timeRemaining.hours * 3600 + timeRemaining.minutes * 60 + timeRemaining.seconds) / (7 * 86400)) * 100)}%`,
+              transition: 'width 0.5s ease-out'
+            }}
+          >
+            <div className="scanline-overlay absolute inset-0 bg-repeat opacity-20" 
+                 style={{backgroundImage: 'repeating-linear-gradient(180deg, transparent 0px, transparent 1px, black 2px, black 3px)'}} />
+          </div>
+        </div>
+
         <div className="grid grid-cols-4 gap-4 text-center">
           <div className="flex flex-col">
             <span className="text-4xl font-mono">{timeRemaining.days}</span>
