@@ -206,9 +206,6 @@ export default function Frame() {
 
       // Removed MIPD Store integration since it's not being used
       // and was causing missing dependency errors
-        console.log("PROVIDER DETAILS", providerDetails);
-        // => [EIP6963ProviderDetail, EIP6963ProviderDetail, ...]
-      });
     };
     if (sdk && !isSDKLoaded) {
       console.log("Calling load");
