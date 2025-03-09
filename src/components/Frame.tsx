@@ -15,11 +15,11 @@ import {
   CardContent,
 } from "~/components/ui/card";
 
-import { config } from "~/components/providers/WagmiProvider";
+import { config } from "~/components/providers/WagmiProvider/config";
 import { truncateAddress } from "~/lib/truncateAddress";
-import { base, optimism } from "wagmi/chains";
+import { base } from "wagmi/chains";
 import { useSession } from "next-auth/react";
-import { createStore } from "@walletconnect/modal";
+import { createStore } from "@walletconnect/modal-core";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
