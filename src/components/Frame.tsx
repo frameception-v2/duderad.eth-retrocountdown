@@ -19,7 +19,7 @@ import { config } from "~/components/providers/WagmiProvider/config";
 import { truncateAddress } from "~/lib/truncateAddress";
 import { base } from "wagmi/chains";
 import { useSession } from "next-auth/react";
-import { createStore } from "@walletconnect/modal-core";
+// Remove unused WalletConnect modal-core import
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
