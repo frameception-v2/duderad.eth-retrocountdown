@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useState, useRef } from "react";
 import sdk, {
   AddFrame,
   SignIn as SignInCore,
@@ -170,7 +170,7 @@ export default function Frame() {
   } as React.CSSProperties;
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
-  const [context, setContext] = useState<Context.FrameContext>();
+  const [context, setContext] = useState<Context>();
   const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
     days: 0,
     hours: 0,
@@ -270,10 +270,10 @@ export default function Frame() {
     <div
       style={{
         ...retroStyles,
-        paddingTop: context?.client.safeAreaInsets?.top ?? 0,
-        paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
-        paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
-        paddingRight: context?.client.safeAreaInsets?.right ?? 0,
+        paddingTop: context?.client?.safeAreaInsets?.top ?? 0,
+        paddingBottom: context?.client?.safeAreaInsets?.bottom ?? 0,
+        paddingLeft: context?.client?.safeAreaInsets?.left ?? 0,
+        paddingRight: context?.client?.safeAreaInsets?.right ?? 0,
         minHeight: '100svh',
         backgroundColor: 'black',
         color: 'var(--neon-green)',
