@@ -72,6 +72,12 @@ export default function Frame() {
 
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
+  const [timeRemaining, setTimeRemaining] = useState<TimeRemaining>({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
 
   const [added, setAdded] = useState(false);
 
@@ -91,6 +97,15 @@ export default function Frame() {
 
       setAddFrameResult(`Error: ${error}`);
     }
+  }, []);
+
+  // Update timer every second
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeRemaining(calculateTimeRemaining());
+    }, 1000);
+
+    return () => clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -173,7 +188,7 @@ export default function Frame() {
       }}
     >
       <div className="w-[300px] mx-auto py-2 px-2">
-        <TimerComponent timeRemaining={{days: 0, hours: 0, minutes: 0, seconds: 0}} />
+        <TimerComponent timeRemaining={timeRemaining} />
       </div>
     </div>
   );
