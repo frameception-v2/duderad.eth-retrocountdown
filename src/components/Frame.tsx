@@ -201,9 +201,25 @@ export default function Frame() {
           left: 0;
           bottom: 0;
           right: 0;
-          background: linear-gradient(0deg, rgba(0,255,0,0.1) 50%, rgba(0,255,0,0.2) 50%);
+          background: 
+            linear-gradient(0deg, 
+              rgba(0,255,0,0.1) 50%, 
+              rgba(0,255,0,0.2) 50%),
+            repeating-linear-gradient(
+              0deg,
+              rgba(0, 0, 0, 0.15) 0px,
+              rgba(0, 0, 0, 0.15) 1px,
+              transparent 1px,
+              transparent 2px
+            );
           z-index: 2;
           pointer-events: none;
+          animation: scanline 6s linear infinite;
+        }
+
+        @keyframes scanline {
+          from { background-position: 0 0; }
+          to { background-position: 0 100vh; }
         }
         .blink {
           animation: blink 1s step-end infinite;
