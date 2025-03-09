@@ -31,6 +31,50 @@ interface TimeRemaining {
 }
 
 function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
+  const progressBarRef = useRef<HTMLDivElement>(null);
+  const [progress, setProgress] = useState(0);
+  const targetProgress = useRef(0);
+
+  useEffect(() => {
+    const calculateProgress = () => {
+      return 1 - (timeRemaining.days * 86400 + 
+                timeRemaining.hours * 3600 + 
+                timeRemaining.minutes * 60 + 
+                timeRemaining.seconds) / (7 * 86400);
+    };
+
+    targetProgress.current = calculateProgress();
+    
+    const animate = () => {
+      setProgress(prev => {
+        const diff = targetProgress.current - prev;
+        return prev + diff * 0.1; // Ease-out factor
+      });
+      
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
+        requestAnimationFrame(animate);
+      }
+    };
+    
+    const rafId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(rafId);
+  }, [timeRemaining]);
+
+  // Handle container resize
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(() => {
+      if (progressBarRef.current) {
+        progressBarRef.current.style.transform = `scaleX(${progress})`;
+      }
+    });
+
+    if (progressBarRef.current) {
+      resizeObserver.observe(progressBarRef.current.parentElement!);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [progress]);
   const [timeFormat, setTimeFormat] = useState<'12h' | '24h'>(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('timeFormat') as '12h' | '24h' || '24h';
@@ -79,10 +123,11 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
         <div className="progress-container h-4 rounded-full bg-opacity-20 bg-neutral-800 overflow-hidden">
           <div 
             className="progress-bar h-full rounded-full relative" 
+            ref={progressBarRef}
             style={{
               background: 'linear-gradient(90deg, var(--neon-green) 0%, var(--electric-blue) 50%, var(--hot-pink) 100%)',
-              width: `${((1 - (timeRemaining.days * 86400 + timeRemaining.hours * 3600 + timeRemaining.minutes * 60 + timeRemaining.seconds) / (7 * 86400)) * 100)}%`,
-              transition: 'width 0.5s ease-out'
+              willChange: 'transform',
+              transform: `scaleX(${progress})`
             }}
           >
             <div className="scanline-overlay absolute inset-0 bg-repeat opacity-20" 
