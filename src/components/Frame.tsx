@@ -22,17 +22,41 @@ import { createStore } from "mipd";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
-function ExampleCard() {
+interface TimeRemaining {
+  days: number
+  hours: number
+  minutes: number
+  seconds: number
+}
+
+function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
   return (
-    <Card>
+    <Card className="crt-effect">
       <CardHeader>
-        <CardTitle>Welcome to the Frame Template</CardTitle>
-        <CardDescription>
-          This is an example card that you can customize or remove
+        <CardTitle className="blink">COUNTDOWN TO 5PM UTC</CardTitle>
+        <CardDescription className="neon-text">
+          TIME REMAINING
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Label>Place content in a Card here.</Label>
+        <div className="grid grid-cols-4 gap-4 text-center">
+          <div className="flex flex-col">
+            <span className="text-4xl font-mono">{timeRemaining.days}</span>
+            <span className="text-sm">DAYS</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-4xl font-mono">{timeRemaining.hours}</span>
+            <span className="text-sm">HOURS</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-4xl font-mono">{timeRemaining.minutes}</span>
+            <span className="text-sm">MINUTES</span>
+          </div>
+          <div className="flex flex-col">
+            <span className="text-4xl font-mono">{timeRemaining.seconds}</span>
+            <span className="text-sm">SECONDS</span>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
@@ -149,7 +173,7 @@ export default function Frame() {
       }}
     >
       <div className="w-[300px] mx-auto py-2 px-2">
-        <ExampleCard />
+        <TimerComponent timeRemaining={{days: 0, hours: 0, minutes: 0, seconds: 0}} />
       </div>
     </div>
   );
