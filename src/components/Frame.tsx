@@ -19,7 +19,7 @@ import { config } from "~/components/providers/WagmiProvider";
 import { truncateAddress } from "~/lib/truncateAddress";
 import { base, optimism } from "wagmi/chains";
 import { useSession } from "next-auth/react";
-import { createStore } from "mipd";
+import { createStore } from "@walletconnect/modal";
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
 
@@ -168,7 +168,7 @@ export default function Frame() {
         sdk.removeAllListeners();
       };
     }
-  }, [isSDKLoaded, addFrame]);
+  }, [isSDKLoaded, addFrame, context?.client.added]);
 
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
