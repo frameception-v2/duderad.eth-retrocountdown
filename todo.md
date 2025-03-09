@@ -19,7 +19,7 @@ Here's the optimized 20-task checklist ordered by implementation dependencies:
 - [x] 17. Create share button with `fc:frame:share` SDK method (Social Sharing)
 - [x] 18. Add dynamic OG image generation using Canvas API (Social Sharing)
 - [x] 19. Optimize animations with `will-change` and IntersectionObserver (Final Assembly)
-- [ ] 20. Set document title and metadata using Next Head (Final Assembly)
+- [x] 20. Set document title and metadata using Next Head (Final Assembly)
 
 Implementation sequence rationale:
 1. Starts with core Next.js setup (1-5)

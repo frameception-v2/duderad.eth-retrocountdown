@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useCallback, useState, useRef } from "react";
+import Head from "next/head";
 import sdk, {
   type Context,
 } from "@farcaster/frame-sdk";
@@ -284,9 +285,18 @@ export default function Frame() {
   }
 
   return (
-    <div
-      style={{
-        ...retroStyles,
+    <>
+      <Head>
+        <title>{PROJECT_TITLE}</title>
+        <meta name="description" content={OG_DESCRIPTION} />
+        <meta property="og:title" content={PROJECT_TITLE} />
+        <meta property="og:description" content={OG_DESCRIPTION} />
+        <meta property="og:image" content="/opengraph-image.png" />
+        <meta name="theme-color" content="#00FF00" />
+      </Head>
+      <div
+        style={{
+          ...retroStyles,
         paddingTop: context?.client?.safeAreaInsets?.top ?? 0,
         paddingBottom: context?.client?.safeAreaInsets?.bottom ?? 0,
         paddingLeft: context?.client?.safeAreaInsets?.left ?? 0,
@@ -378,5 +388,6 @@ export default function Frame() {
         </div>
       </div>
     </div>
+    </>
   );
 }
