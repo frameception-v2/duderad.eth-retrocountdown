@@ -352,6 +352,18 @@ export default function Frame() {
         }}
       >
         <TimerComponent timeRemaining={timeRemaining} />
+        <div
+          className="mt-4 text-center cursor-pointer blink"
+          onClick={() => sdk.actions.share()}
+          style={{
+            padding: '8px',
+            border: '2px solid var(--hot-pink)',
+            borderRadius: '4px',
+            textShadow: '0 0 5px var(--electric-blue)'
+          }}
+        >
+          SHARE THIS TIMER
+        </div>
       </div>
     </div>
   );
