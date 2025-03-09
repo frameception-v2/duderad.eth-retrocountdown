@@ -31,8 +31,31 @@ interface TimeRemaining {
 }
 
 function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
+  const [timeFormat, setTimeFormat] = useState<'12h' | '24h'>(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('timeFormat') as '12h' | '24h' || '24h';
+    }
+    return '24h';
+  });
+
+  const toggleTimeFormat = () => {
+    const newFormat = timeFormat === '24h' ? '12h' : '24h';
+    setTimeFormat(newFormat);
+    localStorage.setItem('timeFormat', newFormat);
+  };
+
+  const formatHour = (hour: number) => {
+    if (timeFormat === '12h') {
+      return hour % 12 || 12;
+    }
+    return hour;
+  };
+
+  const getPeriod = (hour: number) => {
+    return hour >= 12 ? 'PM' : 'AM';
+  };
   return (
-    <Card className="crt-effect">
+    <Card className="crt-effect cursor-pointer" onClick={toggleTimeFormat}>
       <CardHeader>
         <CardTitle className="blink">COUNTDOWN TO 5PM UTC</CardTitle>
         <CardDescription className="neon-text">
@@ -46,7 +69,10 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
             <span className="text-sm">DAYS</span>
           </div>
           <div className="flex flex-col">
-            <span className="text-4xl font-mono">{timeRemaining.hours}</span>
+            <span className="text-4xl font-mono">
+              {formatHour(timeRemaining.hours)}
+              <span className="text-sm">{timeFormat === '12h' && getPeriod(timeRemaining.hours)}</span>
+            </span>
             <span className="text-sm">HOURS</span>
           </div>
           <div className="flex flex-col">
