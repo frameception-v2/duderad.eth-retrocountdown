@@ -39,19 +39,28 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
 
     targetProgress.current = calculateProgress();
     
-    const animate = () => {
-      setProgress(prev => {
-        const diff = targetProgress.current - prev;
-        return prev + diff * 0.1; // Ease-out factor
-      });
-      
-      if (progressBarRef.current) {
-        progressBarRef.current.style.transform = `scaleX(${progress})`;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        const animate = () => {
+          setProgress(prev => {
+            const diff = targetProgress.current - prev;
+            return prev + diff * 0.1; // Ease-out factor
+          });
+          
+          if (progressBarRef.current) {
+            progressBarRef.current.style.transform = `scaleX(${progress})`;
+            if (entry.isIntersecting) {
+              requestAnimationFrame(animate);
+            }
+          }
+        };
         requestAnimationFrame(animate);
       }
-    };
+    }, { threshold: 0.1 });
     
-    const rafId = requestAnimationFrame(animate);
+    if (progressBarRef.current) {
+      observer.observe(progressBarRef.current);
+    }
     return () => cancelAnimationFrame(rafId);
   }, [timeRemaining]);
 
@@ -298,9 +307,10 @@ export default function Frame() {
           bottom: 0;
           right: 0;
           background: 
-            linear-gradient(0deg, 
-              rgba(0,255,0,0.1) 50%, 
+            linear-gradient(0deg,
+              rgba(0,255,0,0.1) 50%,
               rgba(0,255,0,0.2) 50%),
+            will-change: background-position;
             repeating-linear-gradient(
               0deg,
               rgba(0, 0, 0, 0.15) 0px,
@@ -325,6 +335,7 @@ export default function Frame() {
         }
         .neon-text {
           animation: neonPulse 1.5s ease-in-out infinite alternate;
+          will-change: text-shadow;
           text-shadow: 0 0 5px var(--hot-pink),
                        0 0 10px var(--hot-pink),
                        0 0 20px var(--electric-blue);
