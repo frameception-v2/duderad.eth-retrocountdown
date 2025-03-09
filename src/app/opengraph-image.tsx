@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 import { PROJECT_TITLE, PROJECT_DESCRIPTION } from "~/lib/constants";
-// Use Next.js public asset handling for fonts
+import { readFileSync } from "fs";
+import { join } from "path";
 
 export const alt = PROJECT_TITLE;
 export const contentType = "image/png";
@@ -34,13 +35,13 @@ async function initializeFonts() {
   if (imageOptions) return imageOptions;
 
   try {
-    const regularFont = await fetch(
-      new URL("public/fonts/Nunito-Regular.ttf", import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    const regularFont = readFileSync(
+      join(process.cwd(), "public/fonts/Nunito-Regular.ttf")
+    );
     
-    const semiBoldFont = await fetch(
-      new URL("public/fonts/Nunito-SemiBold.ttf", import.meta.url)
-    ).then((res) => res.arrayBuffer());
+    const semiBoldFont = readFileSync(
+      join(process.cwd(), "public/fonts/Nunito-SemiBold.ttf")
+    );
 
     imageOptions = {
       width: 1200,
