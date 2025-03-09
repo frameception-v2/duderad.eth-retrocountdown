@@ -39,6 +39,13 @@ function ExampleCard() {
 }
 
 export default function Frame() {
+  // CSS variables for retro color palette
+  const retroStyles = {
+    '--neon-green': '#00FF00',
+    '--hot-pink': '#FF00FF',
+    '--electric-blue': '#0000FF',
+  } as React.CSSProperties;
+
   const [isSDKLoaded, setIsSDKLoaded] = useState(false);
   const [context, setContext] = useState<Context.FrameContext>();
 
@@ -130,10 +137,15 @@ export default function Frame() {
   return (
     <div
       style={{
+        ...retroStyles,
         paddingTop: context?.client.safeAreaInsets?.top ?? 0,
         paddingBottom: context?.client.safeAreaInsets?.bottom ?? 0,
         paddingLeft: context?.client.safeAreaInsets?.left ?? 0,
         paddingRight: context?.client.safeAreaInsets?.right ?? 0,
+        minHeight: '100svh',
+        backgroundColor: 'black',
+        color: 'var(--neon-green)',
+        fontFamily: 'monospace',
       }}
     >
       <div className="w-[300px] mx-auto py-2 px-2">

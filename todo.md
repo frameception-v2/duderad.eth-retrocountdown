@@ -3,7 +3,7 @@ Here's the optimized 20-task checklist ordered by implementation dependencies:
 - [ ] 1. Create Next.js TypeScript project with `create-next-app@latest` (Project Setup)
 - [x] 2. Configure `next.config.js` with `images.remotePatterns` for Farcaster assets (Project Setup)
 - [x] 3. Install `@standard-crypto/farcaster-embed` package via npm (Project Setup)
-- [ ] 4. Create `RootLayout` with viewport meta tags and CSS variables (Project Setup)
+- [x] 4. Create `RootLayout` with viewport meta tags and CSS variables (Project Setup)
 - [ ] 5. Implement base `TimerComponent` with `TimeRemaining` props interface (Project Setup)
 - [ ] 6. Create `calculateTimeRemaining` utility with Intl.DateTimeFormat UTC (Countdown Logic)
 - [ ] 7. Add useState/useEffect for countdown updates with 1s interval (Countdown Logic)
