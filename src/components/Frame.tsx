@@ -6,6 +6,7 @@ import sdk, {
   SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
+import { calculateTimeRemaining } from "~/lib/calculateTimeRemaining";
 import {
   Card,
   CardHeader,
@@ -187,6 +188,35 @@ export default function Frame() {
         fontFamily: 'monospace',
       }}
     >
+      <style>{`
+        .crt-effect {
+          position: relative;
+          overflow: hidden;
+        }
+        .crt-effect::after {
+          content: " ";
+          display: block;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          background: linear-gradient(0deg, rgba(0,255,0,0.1) 50%, rgba(0,255,0,0.2) 50%);
+          z-index: 2;
+          pointer-events: none;
+        }
+        .blink {
+          animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+          50% { opacity: 0; }
+        }
+        .neon-text {
+          text-shadow: 0 0 5px var(--hot-pink),
+                       0 0 10px var(--hot-pink),
+                       0 0 20px var(--electric-blue);
+        }
+      `}</style>
       <div className="w-[300px] mx-auto py-2 px-2">
         <TimerComponent timeRemaining={timeRemaining} />
       </div>
