@@ -16,7 +16,7 @@ import {
 
 // Remove unused WalletConnect modal-core import
 import { Label } from "~/components/ui/label";
-import { PROJECT_TITLE } from "~/lib/constants";
+import { PROJECT_TITLE, OG_DESCRIPTION } from "~/lib/constants";
 
 interface TimeRemaining {
   days: number
@@ -200,8 +200,6 @@ export default function Frame() {
       } else {
         setAddFrameResult(`Unknown error occurred`);
       }
-
-      setAddFrameResult(`Error: ${error}`);
     }
   }, []);
 
@@ -278,7 +276,7 @@ export default function Frame() {
         sdk.removeAllListeners();
       };
     }
-  }, [isSDKLoaded, addFrame, context?.client.added]);
+  }, [isSDKLoaded, addFrame, context?.client.added, setContext, setAdded]);
 
   if (!isSDKLoaded) {
     return <div>Loading...</div>;
