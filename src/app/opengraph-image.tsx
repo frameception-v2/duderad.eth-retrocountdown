@@ -1,4 +1,4 @@
-import { ImageResponse } from "next/og";
+import { ImageResponse } from "next/server";
 import { PROJECT_TITLE, PROJECT_DESCRIPTION } from "~/lib/constants";
 import { readFileSync } from "fs";
 import { join } from "path";
@@ -6,26 +6,6 @@ import { join } from "path";
 export const alt = PROJECT_TITLE;
 export const contentType = "image/png";
 
-// Function to load font with error handling
-async function loadFont(fontPath: string): Promise<Buffer> {
-  try {
-    const fontData = readFileSync(fontPath);
-    return fontData;
-  } catch (error) {
-    // Fallback to loading from absolute path
-    try {
-      const absolutePath = join(
-        process.cwd(),
-        "public",
-        "fonts",
-        fontPath.split("/").pop()!
-      );
-      return readFileSync(absolutePath);
-    } catch (fallbackError) {
-      throw new Error(`Failed to load font ${fontPath}: ${error}`);
-    }
-  }
-}
 
 // Create reusable options object
 let imageOptions: any = null;

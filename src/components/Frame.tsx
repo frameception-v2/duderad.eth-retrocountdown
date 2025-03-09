@@ -2,8 +2,6 @@
 
 import { useEffect, useCallback, useState, useRef } from "react";
 import sdk, {
-  AddFrame,
-  SignIn as SignInCore,
   type Context,
 } from "@farcaster/frame-sdk";
 import { calculateTimeRemaining } from "~/lib/calculateTimeRemaining";
@@ -175,18 +173,17 @@ export default function Frame() {
   });
 
   const [added, setAdded] = useState(false);
-
-  const [addFrameResult] = useState("");
+  const [addFrameResult, setAddFrameResult] = useState("");
 
   const addFrame = useCallback(async () => {
     try {
       await sdk.actions.addFrame();
     } catch (error) {
-      if (error instanceof AddFrame.RejectedByUser) {
+      if (error instanceof sdk.actions.AddFrame.RejectedByUser) {
         setAddFrameResult(`Not added: ${error.message}`);
       }
 
-      if (error instanceof AddFrame.InvalidDomainManifest) {
+      if (error instanceof sdk.actions.AddFrame.InvalidDomainManifest) {
         setAddFrameResult(`Not added: ${error.message}`);
       }
 
