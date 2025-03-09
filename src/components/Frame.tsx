@@ -212,9 +212,22 @@ export default function Frame() {
           50% { opacity: 0; }
         }
         .neon-text {
+          animation: neonPulse 1.5s ease-in-out infinite alternate;
           text-shadow: 0 0 5px var(--hot-pink),
                        0 0 10px var(--hot-pink),
                        0 0 20px var(--electric-blue);
+        }
+        @keyframes neonPulse {
+          from {
+            text-shadow: 0 0 5px var(--hot-pink),
+                         0 0 10px var(--hot-pink),
+                         0 0 20px var(--electric-blue);
+          }
+          to {
+            text-shadow: 0 0 5px var(--electric-blue),
+                         0 0 10px var(--electric-blue),
+                         0 0 20px var(--hot-pink);
+          }
         }
       `}</style>
       <div className="w-[300px] mx-auto py-2 px-2">
