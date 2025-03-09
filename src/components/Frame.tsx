@@ -61,7 +61,13 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
     if (progressBarRef.current) {
       observer.observe(progressBarRef.current);
     }
-    return () => cancelAnimationFrame(rafId);
+    let rafId: number;
+    return () => {
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+      observer.disconnect();
+    };
   }, [timeRemaining]);
 
   // Handle container resize
@@ -188,12 +194,10 @@ export default function Frame() {
     try {
       await sdk.actions.addFrame();
     } catch (error) {
-      if (error instanceof sdk.actions.AddFrame.RejectedByUser) {
-        setAddFrameResult(`Not added: ${error.message}`);
-      }
-
-      if (error instanceof sdk.actions.AddFrame.InvalidDomainManifest) {
-        setAddFrameResult(`Not added: ${error.message}`);
+      if (error instanceof Error) {
+        setAddFrameResult(`Error: ${error.message}`);
+      } else {
+        setAddFrameResult(`Unknown error occurred`);
       }
 
       setAddFrameResult(`Error: ${error}`);
