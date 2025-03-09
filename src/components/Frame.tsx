@@ -198,6 +198,17 @@ export default function Frame() {
     }
   }, []);
 
+  // Lock viewport height for mobile
+  useEffect(() => {
+    const setVh = () => {
+      document.documentElement.style.setProperty('--vh', `${window.innerHeight}px`);
+    };
+    
+    setVh(); // Set initial height
+    window.addEventListener('resize', setVh);
+    return () => window.removeEventListener('resize', setVh);
+  }, []);
+
   // Update timer every second
   useEffect(() => {
     const timer = setInterval(() => {
@@ -338,7 +349,12 @@ export default function Frame() {
           }
         }
       `}</style>
-      <div className="w-[300px] mx-auto py-2 px-2">
+      <div 
+        className="w-[300px] mx-auto py-2 px-2"
+        style={{
+          touchAction: 'manipulation' // Prevent default touch behaviors
+        }}
+      >
         <TimerComponent timeRemaining={timeRemaining} />
       </div>
     </div>
