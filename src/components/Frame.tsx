@@ -55,7 +55,19 @@ function TimerComponent({ timeRemaining }: { timeRemaining: TimeRemaining }) {
     return hour >= 12 ? 'PM' : 'AM';
   };
   return (
-    <Card className="crt-effect cursor-pointer" onClick={toggleTimeFormat}>
+    <Card 
+      className="crt-effect cursor-pointer" 
+      onClick={toggleTimeFormat}
+      onTouchStart={(e) => {
+        e.preventDefault();
+        toggleTimeFormat();
+      }}
+      onTouchEnd={(e) => e.preventDefault()}
+      style={{
+        transform: 'translateZ(0)', // Enable GPU acceleration
+        touchAction: 'manipulation'
+      }}
+    >
       <CardHeader>
         <CardTitle className="blink">COUNTDOWN TO 5PM UTC</CardTitle>
         <CardDescription className="neon-text">
