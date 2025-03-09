@@ -15,10 +15,6 @@ import {
   CardContent,
 } from "~/components/ui/card";
 
-import { config } from "~/components/providers/WagmiProvider/config";
-import { truncateAddress } from "~/lib/truncateAddress";
-import { base } from "wagmi/chains";
-import { useSession } from "next-auth/react";
 // Remove unused WalletConnect modal-core import
 import { Label } from "~/components/ui/label";
 import { PROJECT_TITLE } from "~/lib/constants";
@@ -180,7 +176,7 @@ export default function Frame() {
 
   const [added, setAdded] = useState(false);
 
-  const [addFrameResult, setAddFrameResult] = useState("");
+  const [addFrameResult] = useState("");
 
   const addFrame = useCallback(async () => {
     try {
